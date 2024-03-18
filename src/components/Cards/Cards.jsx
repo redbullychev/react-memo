@@ -141,7 +141,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
       return;
     }
 
-    // ... игра продолжается
+    // ...игра продолжается
   };
 
   const isGameEnded = status === STATUS_LOST || status === STATUS_WON;
