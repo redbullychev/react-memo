@@ -128,9 +128,11 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
     });
 
     if (openCardsWithoutPair.length >= 2) {
+      setTimeout(() => {
+        openCardsWithoutPair[1].open = false;
+        openCardsWithoutPair[0].open = false;
+      }, 1000);
       setCountTry(countTry - 1);
-      openCardsWithoutPair[1].open = false;
-      openCardsWithoutPair[0].open = false;
     }
 
     const playerLost = countTry === 0;
