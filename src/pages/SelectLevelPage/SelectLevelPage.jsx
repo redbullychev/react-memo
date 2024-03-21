@@ -7,7 +7,7 @@ export function SelectLevelPage() {
   return (
     <div className={styles.container}>
       <div className={styles.modal}>
-        <div className="toggle-switch">
+        <div className={styles.toggleSwitch}>
           <input type="checkbox" onClick={easyModeSelect} />
           <label>Легкий режим</label>
         </div>
