@@ -7,10 +7,11 @@ import { postLeader } from "../../api";
 import { useLeaders } from "../../context/hooks/useLeaders";
 import { Link } from "react-router-dom";
 
-export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, onClick }) {
+export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, achievements, onClick }) {
   const [newLeader, setNewLeader] = useState({
     name: "",
     time: gameDurationSeconds,
+    achievements: achievements,
   });
   const { setLeaders, leaders } = useLeaders();
   const [btnDisabled, setBtnDisabled] = useState(false);
@@ -25,7 +26,7 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
   };
   const handleFormSubmit = e => {
     e.preventDefault();
-    postLeader({ name: newLeader.name, time: newLeader.time })
+    postLeader({ name: newLeader.name, time: newLeader.time, achievements: newLeader.achievements })
       .then(leaders => {
         setLeaders(leaders.leaders);
         setBtnDisabled(!btnDisabled);

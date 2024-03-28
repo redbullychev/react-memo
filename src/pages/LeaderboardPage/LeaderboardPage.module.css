@@ -34,3 +34,9 @@
     padding-left: 50px;
     padding-right: 50px;
 }
+
+.grid {
+    width: 300px;
+    display: flex;
+    justify-content: space-evenly;
+}

@@ -6,6 +6,7 @@ import { EndGameModal } from "../../components/EndGameModal/EndGameModal";
 import { Button } from "../../components/Button/Button";
 import { Card } from "../../components/Card/Card";
 import { useEasyMode } from "../../context/hooks/useEasyMode";
+import superImg from "./super.png";
 
 // Игра закончилась
 const STATUS_LOST = "STATUS_LOST";
@@ -42,6 +43,7 @@ function getTimerValue(startDate, endDate) {
  * previewSeconds - сколько секунд пользователь будет видеть все карты открытыми до начала игры
  */
 export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
+  const [achievements, setAchievements] = useState([]);
   const { easyMode } = useEasyMode();
   const [countTry, setCountTry] = useState(null);
   // В cards лежит игровое поле - массив карт и их состояние открыта\закрыта
@@ -86,17 +88,32 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
    * - "Игрок проиграл", если на поле есть две открытые карты без пары
    * - "Игра продолжается", если не случилось первых двух условий
    */
+  function alohomora() {
+    if (achievements.includes(1)) {
+      alert("Подсказкой можно воспользоваться только 1 раз");
+      return;
+    }
+    let closedCards = cards.filter(card => !card.open);
+    closedCards = shuffle(closedCards);
+    closedCards[0].open = true;
+    closedCards.forEach(card => {
+      if (card.suit === closedCards[0].suit && card.rank === closedCards[0].rank) {
+        card.open = true;
+      }
+    });
+    setAchievements([1]);
+  }
+
   const openCard = clickedCard => {
     // Если карта уже открыта, то ничего не делаем
     if (clickedCard.open) {
       return;
     }
     // Игровое поле после открытия кликнутой карты
-    const nextCards = cards.map(card => {
+    let nextCards = cards.map(card => {
       if (card.id !== clickedCard.id) {
         return card;
       }
-
       return {
         ...card,
         open: true,
@@ -195,7 +212,6 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
             </div>
           ) : (
             <>
-              <div className={styles.count}>{easyMode && `Осталось попыток ${countTry}`}</div>
               <div className={styles.timerValue}>
                 <div className={styles.timerDescription}>min</div>
                 <div>{timer.minutes.toString().padStart("2", "0")}</div>
@@ -208,6 +224,8 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
             </>
           )}
         </div>
+        <div className={styles.count}>{easyMode && `Осталось попыток ${countTry}`}</div>
+        {status === STATUS_IN_PROGRESS ? <img onClick={alohomora} src={superImg} alt="super" /> : null}
         {status === STATUS_IN_PROGRESS ? <Button onClick={resetGame}>Начать заново</Button> : null}
       </div>
 
@@ -229,6 +247,7 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
             isWon={status === STATUS_WON}
             gameDurationSeconds={timer.seconds}
             gameDurationMinutes={timer.minutes}
+            achievements={achievements}
             onClick={resetGame}
           />
         </div>
