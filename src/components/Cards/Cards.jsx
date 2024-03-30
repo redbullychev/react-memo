@@ -224,9 +224,13 @@ export function Cards({ pairsCount = 3, previewSeconds = 5 }) {
             </>
           )}
         </div>
-        <div className={styles.count}>{easyMode && `Осталось попыток ${countTry}`}</div>
-        {status === STATUS_IN_PROGRESS ? <img onClick={alohomora} src={superImg} alt="super" /> : null}
-        {status === STATUS_IN_PROGRESS ? <Button onClick={resetGame}>Начать заново</Button> : null}
+        {status === STATUS_IN_PROGRESS ? (
+          <>
+            <div className={styles.count}>{easyMode && `Осталось попыток ${countTry}`}</div>
+            <img onClick={alohomora} src={superImg} alt="super" />
+            <Button onClick={resetGame}>Начать заново</Button>
+          </>
+        ) : null}
       </div>
 
       <div className={styles.cards}>

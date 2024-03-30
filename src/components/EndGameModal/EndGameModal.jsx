@@ -51,8 +51,9 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
       <img className={styles.image} src={imgSrc} alt={imgAlt} />
       <h2 className={styles.title}>{title}</h2>
       {isLeader && (
-        <div>
+        <div className={styles.inputDiv}>
           <input
+            className={styles.inputSave}
             type="text"
             name="name"
             value={newLeader.name}
@@ -61,7 +62,7 @@ export function EndGameModal({ isWon, gameDurationSeconds, gameDurationMinutes, 
             placeholder="Пользователь"
             autoFocus=""
           />
-          <button onClick={handleFormSubmit} disabled={btnDisabled}>
+          <button className={styles.btnsave} onClick={handleFormSubmit} disabled={btnDisabled}>
             Сохранить результат
           </button>
         </div>
