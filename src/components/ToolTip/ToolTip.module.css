@@ -1,4 +1,5 @@
 .toolTip{
+    display: flex;
     position: absolute;
     height: 78px;
     width: 174px;

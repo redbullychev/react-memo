@@ -22,7 +22,7 @@ export default function ToolTipSuper(isAchievment) {
 
   return (
     <>
-      {isAchievment ? (
+      {Object.values(isAchievment)[0] ? (
         <>
           <img onMouseEnter={onMouseEnterHandler} onMouseLeave={onMouseLeaveHandler} src={super2} alt="" />
           {showToolTip && <div className={styles.toolTip}> Игра пройдена без супер сил </div>}
